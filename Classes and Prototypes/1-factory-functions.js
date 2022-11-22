@@ -24,7 +24,28 @@ function userCreatorNew(name, score) {
 
 const userFunctionStore = {
   increment: function() {
-    this.score++;
+    function add() {
+      this.score++; //this will be the global memory in this way => wont work
+      console.log(this.score);
+    }
+    //SOLUTIONS:
+    //Old way
+    that = this;
+    function add1(that){
+      that.score++;
+      console.log(that.score);
+    }
+    //add1();
+
+    //Call method
+    //add.call(this);
+
+    //Best:
+    const add2 = () => {
+      this.score++;
+      console.log(this.score);
+    }
+    //add2();
   },
   //login: function(){console.log("Logged in!");}
 }
@@ -32,5 +53,5 @@ const userFunctionStore = {
 user1 = userCreatorNew("Will", 3);
 user2 = userCreatorNew("Tim", 5);
 
-user1.increment;
-user1.hasOwnProperty('score');
+user1.increment();
+//user1.hasOwnProperty('score');
